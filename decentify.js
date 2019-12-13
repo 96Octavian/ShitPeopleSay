@@ -11,10 +11,11 @@ function nativeTreeWalker() {
     var node;
 
     while(node = walker.nextNode()) {
+        node.textContent = node.textContent.replace(/MDN/g, "REPLACED");
         textNodes.push(node.nodeValue);
     }
 }
 
 nativeTreeWalker();
 
-alert("There are " + textNodes.length + " Text nodes");
+alert("There are " + textNodes.length + " text nodes");
