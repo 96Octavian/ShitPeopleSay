@@ -1,21 +1,31 @@
+console.log("Starting...");
+
 var textNodes = [];
 
 function nativeTreeWalker() {
     var walker = document.createTreeWalker(
-        document.body, 
-        NodeFilter.SHOW_TEXT, 
-        null, 
+        document.body,
+        NodeFilter.SHOW_TEXT,
+        null,
         false
     );
 
     var node;
 
-    while(node = walker.nextNode()) {
-        node.textContent = node.textContent.replace(/MDN/g, "REPLACED");
+    while (node = walker.nextNode()) {
+        regexpReplacer(node)
+        //node.textContent = node.textContent.replace(/MDN/g, "REPLACED");
         textNodes.push(node.nodeValue);
     }
 }
 
+var regexpReplacer = function (node) {
+    node.textContent = node.textContent.replace(/MDN/g, "REPLACED");
+    // for (let key of Object.keys(dict)) {
+    //     node.textContent = node.textContent.replace(key, dict[key]);;
+    // }
+}
+
 nativeTreeWalker();
 
-alert("There are " + textNodes.length + " text nodes");
+console.log("There are " + textNodes.length + " nodes");
