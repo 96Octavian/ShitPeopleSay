@@ -2,6 +2,10 @@ console.log("Starting...");
 
 var textNodes = [];
 
+var dict = {
+    "/MDN/g": "REPLACED"
+}
+
 function nativeTreeWalker() {
     var walker = document.createTreeWalker(
         document.body,
@@ -20,10 +24,10 @@ function nativeTreeWalker() {
 }
 
 var regexpReplacer = function (node) {
-    node.textContent = node.textContent.replace(/MDN/g, "REPLACED");
-    // for (let key of Object.keys(dict)) {
-    //     node.textContent = node.textContent.replace(key, dict[key]);;
-    // }
+    //node.textContent = node.textContent.replace(/MDN/g, "REPLACED");
+    for (let key of Object.keys(dict)) {
+        node.textContent = node.textContent.replace(key, dict[key]);;
+    }
 }
 
 nativeTreeWalker();
