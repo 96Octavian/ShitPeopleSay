@@ -1,12 +1,25 @@
 console.log("Starting...");
 
-var textNodes = [];
+var dict;
 
-var dict = {
-    "/MDN/g": "REPLACED"
+function getLocalPaste() {
+    let fullURL = browser.runtime.getURL("paste.json");
+    fetch(fullURL)
+        .then(paste => {
+            paste.text()
+            .then(content => {
+                let dict = JSON.parse(content.toString());
+                let regexps = [];
+                dict.forEach(elem => {
+                    regexps.push([new RegExp(elem.pattern, elem.flags), elem.substitution]);
+                })
+                nativeTreeWalker(regexps);
+            })
+
+        })
+        .catch(err => console.log("Error: " + err));
 }
-
-function nativeTreeWalker() {
+function nativeTreeWalker(regexps) {
     var walker = document.createTreeWalker(
         document.body,
         NodeFilter.SHOW_TEXT,
@@ -14,22 +27,19 @@ function nativeTreeWalker() {
         false
     );
 
-    var node;
+    let node;
 
     while (node = walker.nextNode()) {
-        regexpReplacer(node)
-        //node.textContent = node.textContent.replace(/MDN/g, "REPLACED");
-        textNodes.push(node.nodeValue);
+        regexpReplacer(node, regexps)
     }
+    console.log("Done.");
 }
 
-var regexpReplacer = function (node) {
-    //node.textContent = node.textContent.replace(/MDN/g, "REPLACED");
-    for (let key of Object.keys(dict)) {
-        node.textContent = node.textContent.replace(key, dict[key]);;
-    }
+var regexpReplacer = function (node, regexps) {
+    regexps.forEach(elem => {
+        node.textContent = node.textContent.replace(elem[0], elem[1]);
+    })
+
 }
 
-nativeTreeWalker();
-
-console.log("There are " + textNodes.length + " nodes");
+getLocalPaste();
