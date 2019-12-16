@@ -7,14 +7,14 @@ function getLocalPaste() {
     fetch(fullURL)
         .then(paste => {
             paste.text()
-            .then(content => {
-                let dict = JSON.parse(content.toString());
-                let regexps = [];
-                dict.forEach(elem => {
-                    regexps.push([new RegExp(elem.pattern, elem.flags), elem.substitution]);
+                .then(content => {
+                    let dict = JSON.parse(content.toString());
+                    let regexps = [];
+                    dict.forEach(elem => {
+                        regexps.push([new RegExp(elem.pattern, elem.flags), elem.substitution]);
+                    })
+                    nativeTreeWalker(regexps);
                 })
-                nativeTreeWalker(regexps);
-            })
 
         })
         .catch(err => console.log("Error: " + err));
@@ -27,19 +27,33 @@ function nativeTreeWalker(regexps) {
         false
     );
 
+    let textNodes = [];
+
     let node;
 
     while (node = walker.nextNode()) {
-        regexpReplacer(node, regexps)
+        textNodes.push(node);
     }
+
+    console.log("There are " + textNodes.length + " nodes");
+    textNodes.forEach(function (el) {
+        regexpReplace(el, regexps);
+    });
+
     console.log("Done.");
+
 }
 
-var regexpReplacer = function (node, regexps) {
+function regexpReplace(textNode, regexps) {
+    let origText = textNode.textContent;
     regexps.forEach(elem => {
-        node.textContent = node.textContent.replace(elem[0], elem[1]);
+        let newHtml = origText.replace(elem[0], '<span style="background-color:#f759e8;">' + elem[1] + '</span>');
+        if (newHtml !== origText) {
+            let newSpan = document.createElement('span');
+            newSpan.innerHTML = newHtml;
+            textNode.parentNode.replaceChild(newSpan, textNode);
+        }
     })
-
 }
 
 getLocalPaste();
