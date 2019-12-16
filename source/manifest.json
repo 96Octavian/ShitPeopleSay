@@ -4,7 +4,7 @@
   "version": "0.6",
   "description": "Replace words or sentences with regexp defined strings.",
   "icons": {
-    "48": "check_circle_outline-24px.svg"
+    "48": "question_answer-24px.svg"
   },
   "content_scripts": [
     {
