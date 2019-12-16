@@ -2,11 +2,11 @@ console.log("Starting...");
 
 var dict;
 
-function getLocalPaste() {
-    let fullURL = browser.runtime.getURL("paste.json");
+function getLocal() {
+    let fullURL = browser.runtime.getURL("regexps.json");
     fetch(fullURL)
-        .then(paste => {
-            paste.text()
+        .then(regexp => {
+            regexp.text()
                 .then(content => {
                     let dict = JSON.parse(content.toString());
                     let regexps = [];
@@ -56,4 +56,4 @@ function regexpReplace(textNode, regexps) {
     })
 }
 
-getLocalPaste();
+getLocal();

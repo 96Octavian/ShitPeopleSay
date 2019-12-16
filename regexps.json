@@ -1,3 +1,37 @@
-{
-    "/MDN/g": "REPLACED"
-}
+[
+    {
+        "pattern": "MDN",
+        "flags": "g",
+        "substitution": "REPLACED"
+    },
+    {
+        "pattern": "[F,f]urbetto",
+        "flags": "g",
+        "substitution": "Truffatore"
+    },
+    {
+        "pattern": "[F,f]urbetti",
+        "flags": "g",
+        "substitution": "Truffatori"
+    },
+    {
+        "pattern": "[N,n]egr[o,i]",
+        "flags": "g",
+        "substitution": "nigga"
+    },
+    {
+        "pattern": "[P,p]ace fiscale",
+        "flags": "g",
+        "substitution": "Condono"
+    },
+    {
+        "pattern": "[C,c]ontratto di governo",
+        "flags": "g",
+        "substitution": "Inciucio"
+    },
+    {
+        "pattern": "[N,n]on sono razzista[,]? ma",
+        "flags": "g",
+        "substitution": "Sono razzista e"
+    }
+]
