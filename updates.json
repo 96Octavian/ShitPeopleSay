@@ -1,0 +1,12 @@
+{
+    "addons": {
+      "{abcd1234-1abc-1234-12ab-abcdef123456}": {
+        "updates": [
+          {
+            "version": "0.6",
+            "update_link": "https://github.com/96Octavian/ShitPeopleSay/release/SPS_0.6.zip"
+          }
+        ]
+      }
+    }
+  }
